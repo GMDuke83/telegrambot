@@ -6,7 +6,7 @@ import os
 app = Flask(__name__)
 
 # Dein Bot-Token
-TOKEN = '7389304184:AAFN0HiOvWlCuUDvwGDFny3JC0EtQPJqHOA'
+TOKEN = '7389304184:AAFN0HiOvWlCuUDwvGDFny3JC0EtQPJqHOA'
 bot = telebot.TeleBot(TOKEN)
 
 # Coins & Liquidationspreise
