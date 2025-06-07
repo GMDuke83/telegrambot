@@ -1,5 +1,0 @@
-Flask
-pyTelegramBotAPI
-requests
-Pillow
-pytesseract
