@@ -21,3 +21,6 @@ bot.set_my_commands([
 ])
 
 COIN_PRICE_API = "https://fapi.binance.com/fapi/v1/ticker/price?symbol={symbol}"
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
