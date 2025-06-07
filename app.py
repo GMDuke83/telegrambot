@@ -1,19 +1,22 @@
 from flask import Flask, request
 import requests
 import telebot
+import os
 
 app = Flask(__name__)
 
+# Dein Bot-Token
 TOKEN = '7389304184:AAFN0HiOvWlCuUDvwGDFny3JC0EtQPJqHOA'
 bot = telebot.TeleBot(TOKEN)
-URL = f"https://api.telegram.org/bot{TOKEN}/"
 
+# Coins & Liquidationspreise
 coins = {
     'HBARUSDT': {'liq': 0.11162},
     'SOLUSDT': {'liq': 99.437},
     'XRPUSDT': {'liq': 1.5537}
 }
 
+# Preisabfrage + Statusbericht generieren
 def fetch_status():
     message = '📊 Liquidation Status:\n'
     for symbol, data in coins.items():
@@ -28,10 +31,12 @@ def fetch_status():
             message += f"\n{symbol}: Fehler beim Abrufen\n"
     return message
 
+# Render-Root Testseite
 @app.route('/', methods=['GET'])
 def home():
     return "Bot läuft.", 200
 
+# Telegram Webhook-Eingang
 @app.route(f'/{TOKEN}', methods=['POST'])
 def telegram_webhook():
     update = request.get_json()
@@ -40,5 +45,7 @@ def telegram_webhook():
         bot.send_message(chat_id, fetch_status())
     return "", 200
 
+# Wichtig für Render: bindet an 0.0.0.0 und Port aus Umgebung
 if __name__ == '__main__':
-    app.run()
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
